@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template, flash
 from werkzeug.utils import secure_filename
 import os
 from collections import Counter
@@ -10,7 +10,7 @@ ALLOWED_EXTENSIONS = {'txt'}
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
+app.secret_key = 'some_secret_key'
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -20,6 +20,7 @@ def allowed_file(filename):
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
+        print(request.files)
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
