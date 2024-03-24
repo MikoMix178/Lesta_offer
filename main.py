@@ -11,9 +11,11 @@ ALLOWED_EXTENSIONS = {'txt'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
+
 def allowed_file(filename):
     return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
@@ -50,6 +52,7 @@ def text_to_table(text):
                   sorted(tf.items(), key=lambda x: x[1], reverse=False)][:50]
 
     return table_data
+
 
 @app.route('/upload_files/<filename>')
 def uploaded_file(filename):
